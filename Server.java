@@ -111,12 +111,6 @@ public class Server {
             }
         }
 
-        /*private void sendListOfUsers(Connect connect, int userId) throws IOException { //отправка клиенту (новому участнику) информации об остальных клиентах (участниках) чата
-            for (int id: connectionMap.keySet()){ //проходимся по списку пользователей
-                if (id != userId) connect.send(new Message(MessageType.USER_ADDED, dbHandler.getNickNameForId(id))); // если id не совпадает с id переданного пользователя, то отправляем ему сообщение о nickName других участников
-            }
-        }*/
-
         private void serverMainLoop(Connect connect, long userId) throws IOException, ClassNotFoundException { //главный цикл обработки сообщений сервером
             //проверяем есть ли у данного пользователя не досталенные сообщения и если да то отправляем ему их
             List<Long> list = dbHandler.getNonSended(userId);
@@ -135,9 +129,6 @@ public class Server {
             while (true){
                 Message message = connect.receive(); // получаем сообщение от клиента
                 if (message.getType() == MessageType.TEXT_CLIENT){ // если тип сообщения ТЕКСТ
-                   // String s = dbHandler.getNickNameForId(userId).concat(": ").concat(message.getData()); //формируем строку сообщения из имения пользователя, отправившего сообщение и самого текста
-                   // sendBroadcastMessage(new Message(MessageType.TEXT, s));     //отправляем сообщение всем участникам чата с новым текстом
-                   // dbHandler.addMassege(userId, 0, message.getData());
 
                     //получаем id получателя сообщения
                     long id = dbHandler.getIdForUserName(message.getEmailReciever());
